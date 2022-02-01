@@ -24,11 +24,10 @@ QueryDSL 4.4.0
 - JPA(Spring-JPA) 사용
 - H2 DB를 사용하여 Sample 진행
 - SpringDoc를 통한 OpenAPI(3.0) 진행 (Swagger3)
-- 
+
 
 ### ERD 
 - https://www.erdcloud.com/
-- 가입 후 Team요청 필요
 
 ### Swagger 2 -> 3
 - Springfox -> SpringDoc로 변경 Springboot에서 SpringDoc OpenAPI 3.0
