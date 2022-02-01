@@ -1,0 +1,98 @@
+server:
+  port: 8000 #서버 포트지정
+  error:
+    include-message: always #Spring2.3부터 naver가 default이므로 response에 담기지 않는 현상 해결
+
+spring:
+  profiles:
+    default: dev # 기본 환경을 dev로
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false #JSON 파싱 시 접근제한자 상관 없이 진행
+
+  servlet:
+    multipart:
+      max-file-size: 1GB #최대 파일업로드 1GB 제한
+      max-request-size: 1GB #파일업로드 요청 1GB 제한
+
+  output:
+    ansi:
+      enabled: always #console color set
+
+  main:
+    allow-bean-definition-overriding: true #bean overriding true
+
+  h2:
+    console:
+      enabled: true  # H2 console 사용
+      path: /test  # console 경로
+app:
+  name: changsol-server-template
+
+storage:
+  location: ./files
+
+#SrpingDoc 설정 API 문서화
+springdoc:
+  version: 1.0.0
+  api-docs:
+    path: /api-docs
+  #Media Type 기본 값을 application/json
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    #api 및 태그 정렬 기준을 알파벳 오름차순
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    #swagger-ui default url인 petstore html 문서 비활성화 여부
+    disable-swagger-default-url: true
+    #json화 된 config파일 대신 파라미터를 이용하여 swagger-ui에 접근
+    #api-docs(/api-docs) 및 swagger-ui.configUrl(/api-docs/swagger-config)를 두번씩 호출하는 것을 방지
+    display-query-params-without-oauth2: true
+  #OpenAPI 3 로 문서화할 api path 리스트
+  paths-to-match:
+    - /v1/**
+    - /test/**
+
+---
+#LOCAL Profile 설정
+spring:
+  profiles: local
+  #DB설정
+  datasource:
+    #h2 드라이버 설정
+    driver-class-name: org.h2.Driver
+    #사용할 DB URL(Connection)
+    url: jdbc:h2:mem:test
+    username: test  #ID
+    password: test  #PWD
+  #JPA 설정
+  jpa:
+    #사용할 DB 플랫폼
+    #mysql => org.hibernate.dialect.MySQLDialect
+    #postgresql => org.hibernate.dialect.PostgreSQLDialect
+    #h2 => org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop #JPA DDL 설정
+    properties:
+      hibernate:
+        show-sql: true #SQL Query 출력여부
+        format_sql: true #SQL Query Format
+
+app:
+  host: localhost:${server.port}
+
+logging:
+  level:
+    org.changsol: debug
+    org.hibernate.type.descriptor.sql: debug #SQL ?변수값
+    org.hibernate.SQL: debug #SQL DML
+  logback:
+    #logFile
+    rollingpolicy:
+      max-file-size: 100MB
+      max-history: 10
+      file-name-pattern: ${app.host}.%d{yyyy-MM-dd}-%i.log
