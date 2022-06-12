@@ -1,4 +1,4 @@
-package org.changsol.api.apps.samples.controller;
+package org.changsol.api.apps.samples.controllers;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.changsol.api.apps.samples.dtos.SampleMasterDto;
 import org.changsol.api.apps.samples.services.SampleMasterService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

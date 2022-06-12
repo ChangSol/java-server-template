@@ -24,6 +24,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //JPA 설정
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //Spring Security 설정
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //Oauth2 설정
+    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.2.6.RELEASE'
     //H2 DB 설정
     implementation 'com.h2database:h2'
     //MySQL DB 설정

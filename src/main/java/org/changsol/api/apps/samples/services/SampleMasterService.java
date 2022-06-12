@@ -6,7 +6,6 @@ import org.changsol.api.apps.samples.dtos.SampleMasterDto;
 import org.changsol.api.apps.samples.entitys.SampleMaster;
 import org.changsol.api.apps.samples.mappers.SampleMasterMapper;
 import org.changsol.api.apps.samples.repositorys.SampleMasterRepository;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
