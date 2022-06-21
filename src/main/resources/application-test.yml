@@ -15,7 +15,7 @@ spring:
   datasource:
     #h2 드라이버 설정
     driver-class-name: org.h2.Driver
-    #사용할 DB URL(Connection)
+    #사용할 DB URL (Connection)
     url: jdbc:h2:mem:test
     username: test  #ID
     password: test  #PWD
