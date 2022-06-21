@@ -1,0 +1,39 @@
+server:
+  port: 8001 #서버 포트지정
+
+spring:
+  config:
+    activate:
+      on-profile: test #환경 이름 설정
+
+  h2:
+    console:
+      enabled: true  # H2 console 사용
+      path: /h2  # console 경로
+
+  #DB설정
+  datasource:
+    #h2 드라이버 설정
+    driver-class-name: org.h2.Driver
+    #사용할 DB URL(Connection)
+    url: jdbc:h2:mem:test
+    username: test  #ID
+    password: test  #PWD
+
+  #JPA 설정
+  jpa:
+    #사용할 DB 플랫폼
+    #mysql => org.hibernate.dialect.MySQLDialect
+    #postgresql => org.hibernate.dialect.PostgreSQLDialect
+    #h2 => org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop #JPA DDL 설정
+    properties:
+      hibernate:
+        show-sql: true #SQL Query 출력여부
+        format_sql: true #SQL Query Format
+
+app:
+  host: localhost:${server.port}
+
