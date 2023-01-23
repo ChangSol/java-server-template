@@ -1,19 +1,14 @@
-buildscript {
-    //ext 전역변수를 설정
-    ext {
-        queryDslVersion = "4.4.0" //queryDSL 버전 4.4.0
-    }
-}
-
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.5.3'
+    id 'org.springframework.boot' version '2.6.6'
     //스프링 부트의 의존성들을 관리해 주는 플러그인
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group 'org.changsol'
-version '1.0-SNAPSHOT'
+version '1.0.0-SNAPSHOT'
+sourceCompatibility = '16'
+targetCompatibility = '16'
 
 repositories {
     mavenCentral()
@@ -26,8 +21,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     //Spring Security 설정
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    //Oauth2 설정
-    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.2.6.RELEASE'
+    //벨리데이션 설정
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+//    //Oauth2 설정
+    implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.3.12.RELEASE'
     //H2 DB 설정
     implementation 'com.h2database:h2'
     //MySQL DB 설정
@@ -36,27 +33,21 @@ dependencies {
     //implementation 'org.postgresql:postgresql'
 
     //Lombok 설정
-    implementation('org.projectlombok:lombok')
-    annotationProcessor('org.projectlombok:lombok')
-    testImplementation('org.projectlombok:lombok')
-    testAnnotationProcessor('org.projectlombok:lombok')
-
+    implementation 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok'
     //MapStruct 설정
-    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-
-    // Querydsl 설정
-    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    annotationProcessor(
-            "javax.persistence:javax.persistence-api",
-            "javax.annotation:javax.annotation-api",
-            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+    implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
     //SpringDoc 설정
-    implementation("org.springdoc:springdoc-openapi-ui:1.4.6")
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
 
     //JUnit5
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //guava
+    implementation 'com.google.guava:guava:31.1-jre'
 }
 
 test {

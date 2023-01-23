@@ -36,18 +36,21 @@ springdoc:
   api-docs:
     path: /api-docs
   #Media Type 기본 값을 application/json
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  cache:
+    disabled: true
   swagger-ui:
     #api 및 태그 정렬 기준을 알파벳 오름차순
     operations-sorter: alpha
     tags-sorter: alpha
-    path: /swagger-ui.html
+    path: /swagger-ui
     #swagger-ui default url인 petstore html 문서 비활성화 여부
     disable-swagger-default-url: true
+    display-request-duration: true  # try it out 을 했을 때 request duration 을 추가로 찍어줌
     #json화 된 config파일 대신 파라미터를 이용하여 swagger-ui에 접근
     #api-docs(/api-docs) 및 swagger-ui.configUrl(/api-docs/swagger-config)를 두번씩 호출하는 것을 방지
-    display-query-params-without-oauth2: true
+#    display-query-params-without-oauth2: true
   #OpenAPI 3 로 문서화할 api path 리스트
   paths-to-match:
     - /v1/**
