@@ -1,5 +1,5 @@
 server:
-  port: 8000 #서버 포트지정
+  port: 8080 #서버 포트지정
   error:
     include-message: always #Spring2.3부터 never가 default이므로 response에 담기지 않는 현상 해결
 

@@ -9,8 +9,8 @@ Gradle-7.1<br>
 QueryDSL 4.4.0
 
 ### 기본환경
-- 사용포트 : 8000<br>
-- swagger url : http://127.0.0.1:8000/swagger-ui.html
+- 사용포트 : 8080<br>
+- swagger url : http://127.0.0.1:8080/swagger-ui
 
 ### 기술 스택
 - JAVA

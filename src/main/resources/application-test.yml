@@ -1,5 +1,5 @@
 server:
-  port: 8001 #서버 포트지정
+  port: 8080 #서버 포트지정
 
 spring:
   config:
