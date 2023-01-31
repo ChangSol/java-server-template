@@ -1,4 +1,4 @@
-package org.changsol.api.apps.samples.dtos;
+package org.changsol.api.apps.samples.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

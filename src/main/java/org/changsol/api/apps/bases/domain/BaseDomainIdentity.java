@@ -13,8 +13,4 @@ public class BaseDomainIdentity extends BaseDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-
-    public BaseDomainIdentity() {
-        super(createdAt);
-    }
 }

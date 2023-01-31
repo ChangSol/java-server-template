@@ -1,6 +1,6 @@
-package org.changsol.api.apps.samples.repositorys;
+package org.changsol.api.apps.samples.repository;
 
-import org.changsol.api.apps.samples.entitys.SampleMaster;
+import org.changsol.api.apps.samples.entity.SampleMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
