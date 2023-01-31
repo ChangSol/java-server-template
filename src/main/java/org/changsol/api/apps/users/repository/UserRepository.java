@@ -1,6 +1,6 @@
-package org.changsol.api.apps.users.repositorys;
+package org.changsol.api.apps.users.repository;
 
-import org.changsol.api.apps.users.entitys.Users;
+import org.changsol.api.apps.users.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

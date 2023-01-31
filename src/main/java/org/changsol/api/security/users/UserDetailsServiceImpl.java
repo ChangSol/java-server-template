@@ -1,8 +1,8 @@
 package org.changsol.api.security.users;
 
 import lombok.RequiredArgsConstructor;
-import org.changsol.api.apps.users.entitys.Users;
-import org.changsol.api.apps.users.repositorys.UserRepository;
+import org.changsol.api.apps.users.entity.Users;
+import org.changsol.api.apps.users.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

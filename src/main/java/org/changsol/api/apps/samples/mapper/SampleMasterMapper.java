@@ -1,4 +1,4 @@
-package org.changsol.api.apps.samples.mappers;
+package org.changsol.api.apps.samples.mapper;
 
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.entity.SampleMaster;

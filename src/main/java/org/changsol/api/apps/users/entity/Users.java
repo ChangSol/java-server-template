@@ -1,8 +1,9 @@
-package org.changsol.api.apps.users.entitys;
+package org.changsol.api.apps.users.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.changsol.api.apps.users.dtos.UserDto;
+import org.changsol.api.apps.bases.domain.BaseDomainIdentity;
+import org.changsol.api.apps.users.dto.UserDto;
 import org.changsol.api.apps.users.mappers.UserMapper;
 import org.changsol.api.utils.entity.BaseEntityLongId;
 import org.hibernate.annotations.ColumnDefault;
@@ -21,7 +22,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @Entity
-public class Users extends BaseEntityLongId {
+public class Users extends BaseDomainIdentity {
     public enum Type {
         ADMIN, //관리자 0
         USER, //사용자 1
@@ -83,10 +84,6 @@ public class Users extends BaseEntityLongId {
 
     public Integer getAge() {
         return this.birth == null ? null : Period.between(this.birth, LocalDate.now()).getYears() + 1;
-    }
-
-    public UserDto.Response toResponse() {
-        return UserMapper.INSTANCE.toResponse(this);
     }
 
     @PrePersist
