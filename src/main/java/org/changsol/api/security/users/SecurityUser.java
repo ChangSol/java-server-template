@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import lombok.Getter;
 import org.changsol.api.apps.users.dto.UserDto;
 import org.changsol.api.apps.users.entity.Users;
+import org.changsol.api.apps.users.mappers.UserMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +20,7 @@ public class SecurityUser extends User {
 
     public SecurityUser(Users user) {
         super(user.getLoginId(), user.getPassword(), getAuthorities(user));
-        this.user = user.toResponse();
+        this.user = UserMapper.INSTANCE.response(user);
     }
 
     /**
