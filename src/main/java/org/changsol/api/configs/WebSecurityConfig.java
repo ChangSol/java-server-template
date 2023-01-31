@@ -1,4 +1,4 @@
-package org.changsol.api.security;
+package org.changsol.api.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.changsol.api.security.support.RestAuthenticationEntryPoint;
