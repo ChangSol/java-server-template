@@ -42,3 +42,6 @@ QueryDSL 4.4.0
 - @ApiOperation(value = "foo", notes = "bar") -> @Operation(summary = "foo", description = "bar")
 - @ApiParam -> @Parameter
 - @ApiResponse(code = 404, message = "foo") -> @ApiResponse(responseCode = "404", description = "foo")
+
+### Code Style
+- chang_sol_code_style.xml 참고
