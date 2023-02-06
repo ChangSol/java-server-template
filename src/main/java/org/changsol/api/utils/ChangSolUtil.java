@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -262,4 +263,9 @@ public class ChangSolUtil {
 	}
 	// endregion
 
+	//region UUID
+	public static String getUUID() {
+		return UUID.randomUUID().toString();
+	}
+	//endregion
 }
