@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 
 /**
  * 유틸 클래스
@@ -266,6 +269,17 @@ public class ChangSolUtil {
 	//region UUID
 	public static String getUUID() {
 		return UUID.randomUUID().toString();
+	}
+	//endregion
+
+	//region DEVICE
+	/**
+	 * 모바일 여부
+	 * @return boolean
+	 */
+	public static boolean isMobile(HttpServletRequest httpServletRequest) {
+		Device device = DeviceUtils.getCurrentDevice(httpServletRequest);
+		return !device.isNormal();
 	}
 	//endregion
 }
