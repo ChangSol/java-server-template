@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @RequiredArgsConstructor
-public class BeanConfig implements WebMvcConfigurer {
+public class BeanConfig {
 
     private final RestTemplateBuilder restTemplateBuilder;
 
