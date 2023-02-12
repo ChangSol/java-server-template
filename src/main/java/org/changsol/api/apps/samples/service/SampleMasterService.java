@@ -6,6 +6,8 @@ import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.entity.SampleMaster;
 import org.changsol.api.apps.samples.mapper.SampleMasterMapper;
 import org.changsol.api.apps.samples.repository.SampleMasterRepository;
+import org.changsol.api.utils.ChangSolUtil;
+import org.changsol.api.utils.jpas.restriction.ChangSolJpaRestriction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
@@ -26,11 +28,12 @@ public class SampleMasterService {
      */
     public List<SampleMasterDto.Response> getSampleMasterList(SampleMasterDto.Request request) {
         //조건
-        if (StringUtils.isNotBlank(request.getKeyword())) {
-
+        ChangSolJpaRestriction restriction = new ChangSolJpaRestriction();
+        if (ChangSolUtil.isNotBlank(request.getKeyword())) {
+            restriction.like("masterName", "테스트");
         }
 
-        return sampleMasterRepository.findAll()
+        return sampleMasterRepository.findAll(restriction.toSpecification())
                 .stream()
                 .map(SampleMasterMapper.INSTANCE::response)
                 .toList();
