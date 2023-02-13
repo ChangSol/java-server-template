@@ -59,7 +59,7 @@ springdoc:
 logging:
   level:
     org.changsol: debug
-    org.hibernate.type.descriptor.sql: debug #SQL ?변수값
+    org.hibernate.type.descriptor.sql: trace #SQL ?변수값
     org.hibernate.SQL: debug #SQL DML
   logback:
     #logFile
