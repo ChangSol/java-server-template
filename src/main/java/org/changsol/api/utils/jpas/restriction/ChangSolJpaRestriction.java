@@ -16,6 +16,8 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.query.criteria.internal.path.ListAttributeJoin;
+import org.hibernate.query.criteria.internal.path.SetAttributeJoin;
 import org.hibernate.validator.internal.engine.groups.Group;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -387,22 +389,25 @@ public class ChangSolJpaRestriction {
 
 			// FETCH CHECK
 			if (!fetchList.isEmpty()) {
-				query.distinct(true); // 카테시안 곱 방지
 				if (root.getJavaType().equals(query.getResultType())) { // data query 와 count query 를 구분
 					for (ChangSolJpaFetch fetch : fetchList) {
 						if (fetch.getColumnName().contains(".")) {
 							Set<? extends Fetch<?, ?>> fetches = root.getFetches();
-							Fetch<T, ?> addFetch = null;
+							Fetch<?, ?> addFetch = null;
 							for (String field : fetch.getColumnName().split("\\.")) {
 								if (fetches.stream().anyMatch(x -> x.getAttribute().getName().equals(field))) {
-									addFetch = (Fetch<T, ?>) fetches.stream()
-																	.filter(x -> x.getAttribute().getName().equals(field))
-																	.findAny()
-																	.orElse(null);
+									addFetch = fetches.stream()
+													  .filter(x -> x.getAttribute().getName().equals(field))
+													  .findAny()
+													  .orElse(null);
 								} else {
 									addFetch = Objects.requireNonNullElse(addFetch, root).fetch(field, fetch.getJoinType());
 								}
 								if (addFetch != null) {
+									if (isCollectionType(addFetch.getClass())) {
+										query.distinct(true); // 카테시안 곱 방지
+									}
+
 									fetches = addFetch.getFetches();
 								}
 							}
@@ -410,7 +415,11 @@ public class ChangSolJpaRestriction {
 							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(fetch.getColumnName()))) {
 								continue;
 							}
-							root.fetch(fetch.getColumnName(), fetch.getJoinType());
+							Fetch<?, ?> addFetch = root.fetch(fetch.getColumnName(), fetch.getJoinType());
+
+							if (isCollectionType(addFetch.getClass())) {
+								query.distinct(true); // 카테시안 곱 방지
+							}
 						}
 					}
 				}
@@ -579,6 +588,13 @@ public class ChangSolJpaRestriction {
 			x = root.get(key);
 		}
 		return x;
+	}
+
+	private boolean isCollectionType(Class<?> clazz) {
+		return Set.class.isAssignableFrom(clazz)
+			|| List.class.isAssignableFrom(clazz)
+			|| SetAttributeJoin.class.isAssignableFrom(clazz)
+			|| ListAttributeJoin.class.isAssignableFrom(clazz);
 	}
 	//endregion
 
