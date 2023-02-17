@@ -36,6 +36,9 @@ public class SampleMasterDto {
     public static class CreateOrUpdate {
         @Schema(description = "마스터 이름", example = "창솔루션")
         private String masterName;
+
+        @Schema(description = "디테일 이름", example = "창솔루션 자식")
+        private String detailName;
     }
 
 }
