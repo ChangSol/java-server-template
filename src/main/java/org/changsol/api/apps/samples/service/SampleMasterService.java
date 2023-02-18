@@ -1,5 +1,6 @@
 package org.changsol.api.apps.samples.service;
 
+import javax.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
@@ -34,6 +35,7 @@ public class SampleMasterService {
 		if (ChangSolUtil.isNotBlank(request.getKeyword())) {
 			restriction.like("masterName", "테스트");
 		}
+		restriction.addFetch("sampleDetails", JoinType.LEFT);
 
 		return sampleMasterRepository.findAll(restriction.toSpecification())
 									 .stream()
