@@ -82,7 +82,7 @@ public List<SampleMasterDto.Response> getSampleMasterList(SampleMasterDto.Reques
         restriction.like("masterName", "테스트");
     }
 	
-	restriction.addFetch("sampleDetails", JoinType.LEFT);
+    restriction.addFetch("sampleDetails", JoinType.LEFT);
 
     return sampleMasterRepository.findAll(restriction.toSpecification())
                                  .stream()
