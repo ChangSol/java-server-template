@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -43,9 +44,14 @@ public class ChangSolJpaRestriction {
 	private final List<ChangSolJpaRestriction> childList = Lists.newArrayList();
 
 	/**
-	 * Fetch Join List
+	 * Fetch List
 	 */
-	private final List<ChangSolJpaFetch> fetchList = Lists.newArrayList();
+	private final List<ChangSolJpaJoin> fetchList = Lists.newArrayList();
+
+	/**
+	 * Join List
+	 */
+	private final List<ChangSolJpaJoin> joinList = Lists.newArrayList();
 
 	public ChangSolJpaRestriction() {
 		type = ChangSolJpaRestrictionType.AND;
@@ -67,7 +73,7 @@ public class ChangSolJpaRestriction {
 	}
 
 	/**
-	 * CONDITION List Clear
+	 * Condition List Clear
 	 */
 	public void conditionClear() {
 		conditionList.clear();
@@ -86,32 +92,61 @@ public class ChangSolJpaRestriction {
 	public void fetchClear() {
 		fetchList.clear();
 	}
+
+	/**
+	 * Join List Clear
+	 */
+	public void joinClear() {
+		joinList.clear();
+	}
 	// endregion
 
 	// region Add Method
 
 	/**
-	 * CHILD Add
+	 * Child Add
 	 */
 	public void addChild(ChangSolJpaRestriction predicate) {
 		childList.add(predicate);
 	}
 
 	/**
-	 * FETCH Add
+	 * Fetch Add
 	 */
 	public void addFetch(String columnName, JoinType joinType) {
-		this.fetchList.add(new ChangSolJpaFetch(columnName, joinType));
+		this.fetchList.add(new ChangSolJpaJoin(columnName, joinType));
+	}
+
+	/**
+	 * Join Add
+	 */
+	public void addJoin(String columnName, JoinType joinType) {
+		this.joinList.add(new ChangSolJpaJoin(columnName, joinType));
 	}
 	// endregion
 
 	// region Remove Method
+
+	/**
+	 * Fetch Remove
+	 */
 	public void removeFetch(String columnName) {
-		List<ChangSolJpaFetch> fetchJoinList = this.fetchList.stream()
-															 .filter(fetch -> !fetch.getColumnName().equals(columnName))
-															 .toList();
+		List<ChangSolJpaJoin> fetchJoinList = this.fetchList.stream()
+															.filter(fetch -> !fetch.getColumnName().equals(columnName))
+															.toList();
 		this.fetchList.clear();
 		this.fetchList.addAll(fetchJoinList);
+	}
+
+	/**
+	 * Join Remove
+	 */
+	public void removeJoin(String columnName) {
+		List<ChangSolJpaJoin> fetchJoinList = this.joinList.stream()
+														   .filter(join -> !join.getColumnName().equals(columnName))
+														   .toList();
+		this.joinList.clear();
+		this.joinList.addAll(fetchJoinList);
 	}
 	// endregion
 
@@ -382,15 +417,15 @@ public class ChangSolJpaRestriction {
 	}
 	// endregion
 
-	//region Specification Method
+	// region Specification Method
 	public <T> Specification<T> toSpecification() {
 		// Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder
 		Specification<T> specification = (root, query, criteriaBuilder) -> {
 
-			// FETCH CHECK
+			// region Fetch
 			if (!fetchList.isEmpty()) {
 				if (root.getJavaType().equals(query.getResultType())) { // data query 와 count query 를 구분
-					for (ChangSolJpaFetch fetch : fetchList) {
+					for (ChangSolJpaJoin fetch : fetchList) {
 						if (fetch.getColumnName().contains(".")) {
 							Set<? extends Fetch<?, ?>> fetches = root.getFetches();
 							Fetch<?, ?> addFetch = null;
@@ -424,6 +459,48 @@ public class ChangSolJpaRestriction {
 					}
 				}
 			}
+			// endregion
+
+			// region join
+			if (!joinList.isEmpty()) {
+				if (root.getJavaType().equals(query.getResultType())) { // data query 와 count query 를 구분
+					for (ChangSolJpaJoin join : joinList) {
+						if (join.getColumnName().contains(".")) {
+							Set<? extends Join<?, ?>> joins = root.getJoins();
+							Join<?, ?> joinObj = null;
+							for (String field : join.getColumnName().split("\\.")) {
+								if (joins.stream().anyMatch(x -> x.getAttribute().getName().equals(field))) {
+									joinObj = joins.stream()
+												   .filter(x -> x.getAttribute().getName().equals(field))
+												   .findAny()
+												   .orElse(null);
+								} else {
+									joinObj = Objects.requireNonNullElse(joinObj, root).join(field, join.getJoinType());
+								}
+
+								if (joinObj != null) {
+									if (isCollectionType(joinObj.getJavaType())) {
+										query.distinct(true); // 카테시안 곱 방지
+									}
+
+									joins = joinObj.getJoins();
+								}
+							}
+						} else {
+							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(join.getColumnName()))) {
+								continue;
+							}
+
+							Join<T, ?> joinObj = root.join(join.getColumnName(), join.getJoinType());
+
+							if (isCollectionType(joinObj.getJavaType())) {
+								query.distinct(true); // 카테시안 곱 방지
+							}
+						}
+					}
+				}
+			}
+			// endregion
 
 			List<Predicate> predicateList = Lists.newArrayList();
 			for (ChangSolJpaCondition condition : conditionList) {
@@ -596,6 +673,6 @@ public class ChangSolJpaRestriction {
 			|| SetAttributeJoin.class.isAssignableFrom(clazz)
 			|| ListAttributeJoin.class.isAssignableFrom(clazz);
 	}
-	//endregion
+	// endregion
 
 }

@@ -35,7 +35,8 @@ public class SampleMasterService {
 		if (ChangSolUtil.isNotBlank(request.getKeyword())) {
 			restriction.like("masterName", "테스트");
 		}
-		restriction.addFetch("sampleDetails", JoinType.LEFT);
+		// restriction.addFetch("sampleDetails", JoinType.LEFT);
+		restriction.addJoin("sampleDetails", JoinType.LEFT);
 
 		return sampleMasterRepository.findAll(restriction.toSpecification())
 									 .stream()
