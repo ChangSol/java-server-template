@@ -4,7 +4,7 @@ import javax.persistence.criteria.JoinType;
 import lombok.Getter;
 
 /**
- * JPA FETCH Class
+ * JPA Restriction Join Class
  */
 @Getter
 class ChangSolJpaJoin {
