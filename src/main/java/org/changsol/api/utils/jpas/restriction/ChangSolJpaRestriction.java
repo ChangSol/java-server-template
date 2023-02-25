@@ -132,7 +132,7 @@ public class ChangSolJpaRestriction {
 	 */
 	public void removeFetch(String columnName) {
 		List<ChangSolJpaJoin> fetchJoinList = this.fetchList.stream()
-															.filter(fetch -> !fetch.getColumnName().equals(columnName))
+															.filter(fetch -> !fetch.columnName().equals(columnName))
 															.toList();
 		this.fetchList.clear();
 		this.fetchList.addAll(fetchJoinList);
@@ -143,7 +143,7 @@ public class ChangSolJpaRestriction {
 	 */
 	public void removeJoin(String columnName) {
 		List<ChangSolJpaJoin> fetchJoinList = this.joinList.stream()
-														   .filter(join -> !join.getColumnName().equals(columnName))
+														   .filter(join -> !join.columnName().equals(columnName))
 														   .toList();
 		this.joinList.clear();
 		this.joinList.addAll(fetchJoinList);
@@ -426,17 +426,17 @@ public class ChangSolJpaRestriction {
 			if (!fetchList.isEmpty()) {
 				if (root.getJavaType().equals(query.getResultType())) { // data query 와 count query 를 구분
 					for (ChangSolJpaJoin fetch : fetchList) {
-						if (fetch.getColumnName().contains(".")) {
+						if (fetch.columnName().contains(".")) {
 							Set<? extends Fetch<?, ?>> fetches = root.getFetches();
 							Fetch<?, ?> addFetch = null;
-							for (String field : fetch.getColumnName().split("\\.")) {
+							for (String field : fetch.columnName().split("\\.")) {
 								if (fetches.stream().anyMatch(x -> x.getAttribute().getName().equals(field))) {
 									addFetch = fetches.stream()
 													  .filter(x -> x.getAttribute().getName().equals(field))
 													  .findAny()
 													  .orElse(null);
 								} else {
-									addFetch = Objects.requireNonNullElse(addFetch, root).fetch(field, fetch.getJoinType());
+									addFetch = Objects.requireNonNullElse(addFetch, root).fetch(field, fetch.joinType());
 								}
 								if (addFetch != null) {
 									if (isCollectionType(addFetch.getClass())) {
@@ -447,10 +447,10 @@ public class ChangSolJpaRestriction {
 								}
 							}
 						} else {
-							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(fetch.getColumnName()))) {
+							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(fetch.columnName()))) {
 								continue;
 							}
-							Fetch<?, ?> addFetch = root.fetch(fetch.getColumnName(), fetch.getJoinType());
+							Fetch<?, ?> addFetch = root.fetch(fetch.columnName(), fetch.joinType());
 
 							if (isCollectionType(addFetch.getClass())) {
 								query.distinct(true); // 카테시안 곱 방지
@@ -465,17 +465,17 @@ public class ChangSolJpaRestriction {
 			if (!joinList.isEmpty()) {
 				if (root.getJavaType().equals(query.getResultType())) { // data query 와 count query 를 구분
 					for (ChangSolJpaJoin join : joinList) {
-						if (join.getColumnName().contains(".")) {
+						if (join.columnName().contains(".")) {
 							Set<? extends Join<?, ?>> joins = root.getJoins();
 							Join<?, ?> joinObj = null;
-							for (String field : join.getColumnName().split("\\.")) {
+							for (String field : join.columnName().split("\\.")) {
 								if (joins.stream().anyMatch(x -> x.getAttribute().getName().equals(field))) {
 									joinObj = joins.stream()
 												   .filter(x -> x.getAttribute().getName().equals(field))
 												   .findAny()
 												   .orElse(null);
 								} else {
-									joinObj = Objects.requireNonNullElse(joinObj, root).join(field, join.getJoinType());
+									joinObj = Objects.requireNonNullElse(joinObj, root).join(field, join.joinType());
 								}
 
 								if (joinObj != null) {
@@ -487,11 +487,11 @@ public class ChangSolJpaRestriction {
 								}
 							}
 						} else {
-							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(join.getColumnName()))) {
+							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(join.columnName()))) {
 								continue;
 							}
 
-							Join<T, ?> joinObj = root.join(join.getColumnName(), join.getJoinType());
+							Join<T, ?> joinObj = root.join(join.columnName(), join.joinType());
 
 							if (isCollectionType(joinObj.getJavaType())) {
 								query.distinct(true); // 카테시안 곱 방지
