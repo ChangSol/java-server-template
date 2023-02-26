@@ -4,6 +4,7 @@ package org.changsol.api.apps.samples.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.changsol.api.apps.bases.dto.PageDto;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.service.SampleMasterService;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,12 @@ public class SampleController {
     @GetMapping("/master")
     public List<SampleMasterDto.Response> getSampleMasterList(SampleMasterDto.Request request){
         return sampleMasterService.getSampleMasterList(request);
+    }
+
+    @Operation(summary = "sample master get page", description = "sample master 데이터 목록 페이징 가져오기")
+    @GetMapping("/master/page")
+    public PageDto.Response<SampleMasterDto.Response> getSampleMasterList(SampleMasterDto.RequestPage request){
+        return sampleMasterService.getSampleMasterPage(request);
     }
 
     @Operation(summary = "sample master create", description = "sample master 데이터 생성")

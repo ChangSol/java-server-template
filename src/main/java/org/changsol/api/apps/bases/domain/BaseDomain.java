@@ -9,6 +9,9 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+/**
+ * Domain Base Class
+ */
 @Getter
 @MappedSuperclass //자식에게 매핑정보만 제공
 @EntityListeners(AuditingEntityListener.class) //Audit

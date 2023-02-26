@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.changsol.api.apps.bases.dto.PageDto;
 
 /**
  * SampleMasterDto
@@ -15,6 +16,14 @@ public class SampleMasterDto {
     @Setter
     @NoArgsConstructor
     public static class Request {
+        private String keyword;
+    }
+
+    @Schema(description = "SampleMaster Request Page")
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class RequestPage extends PageDto.Request {
         private String keyword;
     }
 
