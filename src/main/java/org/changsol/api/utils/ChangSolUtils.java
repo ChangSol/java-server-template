@@ -14,9 +14,9 @@ import org.springframework.mobile.device.DeviceUtils;
 /**
  * 유틸 클래스
  */
-public class ChangSolUtil {
+public class ChangSolUtils {
 
-	private ChangSolUtil() {
+	private ChangSolUtils() {
 	}
 
 	// region isEmpty

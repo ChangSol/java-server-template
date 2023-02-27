@@ -14,7 +14,7 @@ public class SampleMasterDto {
     @Schema(description = "SampleMaster Request")
     @Getter
     @Setter
-    @NoArgsConstructor
+    // @NoArgsConstructor
     public static class Request {
         private String keyword;
     }

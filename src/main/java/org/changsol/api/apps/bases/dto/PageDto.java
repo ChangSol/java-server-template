@@ -1,6 +1,5 @@
 package org.changsol.api.apps.bases.dto;
 
-import com.google.common.collect.Lists;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -8,9 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.changsol.api.apps.bases.enums.SortType;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * Page Dto Class
@@ -30,8 +28,11 @@ public class PageDto {
 		@Schema(title = "한 페이지 당 갯수", example = "10", requiredMode = Schema.RequiredMode.REQUIRED)
 		private Integer limit = 20;
 
-		@Schema(title = "정렬 목록")
-		private List<SortDto> sortList = Lists.newArrayList();
+		@Schema(title = "정렬 필드")
+		private String sortColumnName;
+
+		@Schema(title = "정렬 타입")
+		private SortType sortType;
 
 		/**
 		 * 페이지 숫자 GET
@@ -76,52 +77,33 @@ public class PageDto {
 
 		@Schema(title = "데이터 목록")
 		private List<T> dataList;
+	}
 
-		/**
-		 * Response 형태로 반환
-		 **/
-		public static <X, Y> Response<X> toResponse(Page<Y> page, List<X> dataList) {
 
-			final int PAGE_NUMBER = page.getNumber() + 1; // 0페이지 -> 1페이지로 변경
+	/**
+	 * Response Return
+	 **/
+	public static <X, Y> Response<X> toResponse(Page<Y> page, List<X> dataList) {
 
-			long pageTotal;
-			// 페이지 총 수
-			if (page.getTotalElements() % page.getSize() != 0) {
-				pageTotal = page.getTotalElements() / page.getSize() + 1;
-			} else {
-				pageTotal = page.getTotalElements() / page.getSize();
-			}
+		final int PAGE_NUMBER = page.getNumber() + 1; // 0페이지 -> 1페이지로 변경
 
-			return new Response<>(pageTotal,
-								  PAGE_NUMBER,
-								  page.getNumber() * page.getSize(),
-								  page.getSize(),
-								  PAGE_NUMBER > 1,
-								  PAGE_NUMBER < pageTotal,
-								  page.getTotalElements(),
-								  dataList.size(),
-								  dataList);
+		long pageTotal;
+		// 페이지 총 수
+		if (page.getTotalElements() % page.getSize() != 0) {
+			pageTotal = page.getTotalElements() / page.getSize() + 1;
+		} else {
+			pageTotal = page.getTotalElements() / page.getSize();
 		}
 
-		/**
-		 * Response 형태로 반환
-		 **/
-		public static <X> Response<X> toResponse(Request request, List<X> dataList) {
-			// 별도 페이징 처리
-			if ((request.getPage() - 1) * request.limit > dataList.size()) {
-				request.setPage(dataList.size() / request.limit + 1);
-			}
-
-			PageRequest pageRequest = PageRequest.of(request.getPage(), request.getLimit());
-
-			// offset
-			final int START = (int) pageRequest.getOffset();
-			final int END = Math.min((START + pageRequest.getPageSize()), dataList.size());
-
-			Page<X> page = new PageImpl<>(dataList.subList(END == 0 ? END : START, END), pageRequest, dataList.size());
-
-			return Response.toResponse(page, page.getContent());
-		}
+		return new Response<>(pageTotal,
+							  PAGE_NUMBER,
+							  page.getNumber() * page.getSize(),
+							  page.getSize(),
+							  PAGE_NUMBER > 1,
+							  PAGE_NUMBER < pageTotal,
+							  page.getTotalElements(),
+							  dataList.size(),
+							  dataList);
 	}
 }
 

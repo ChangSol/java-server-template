@@ -26,7 +26,7 @@ public class SampleController {
 
     @Operation(summary = "sample master get page", description = "sample master 데이터 목록 페이징 가져오기")
     @GetMapping("/master/page")
-    public PageDto.Response<SampleMasterDto.Response> getSampleMasterList(SampleMasterDto.RequestPage request){
+    public PageDto.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request){
         return sampleMasterService.getSampleMasterPage(request);
     }
 
