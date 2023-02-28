@@ -3,13 +3,19 @@ package org.changsol.api.apps.samples.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.changsol.api.apps.bases.dto.PageDto;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.service.SampleMasterService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.changsol.api.utils.ChangSolPageUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "00.Sample", description = "Sample API 입니다.") //Swagger API 명 설정
 @RequiredArgsConstructor //의존성주입을 위한 롬복 어노테이션 선언
@@ -26,7 +32,7 @@ public class SampleController {
 
     @Operation(summary = "sample master get page", description = "sample master 데이터 목록 페이징 가져오기")
     @GetMapping("/master/page")
-    public PageDto.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request){
+    public ChangSolPageUtils.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request){
         return sampleMasterService.getSampleMasterPage(request);
     }
 

@@ -3,12 +3,12 @@ package org.changsol.api.apps.samples.service;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
-import org.changsol.api.apps.bases.dto.PageDto;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.entity.SampleDetail;
 import org.changsol.api.apps.samples.entity.SampleMaster;
 import org.changsol.api.apps.samples.mapper.SampleMasterMapper;
 import org.changsol.api.apps.samples.repository.SampleMasterRepository;
+import org.changsol.api.utils.ChangSolPageUtils;
 import org.changsol.api.utils.ChangSolUtils;
 import org.changsol.api.utils.jpas.restriction.ChangSolJpaRestriction;
 import org.springframework.data.domain.Page;
@@ -50,9 +50,9 @@ public class SampleMasterService {
 	 * SampleMaster Data Get Page
 	 *
 	 * @param request 검색조건
-	 * @return SampleMasterDto.Response 리스트
+	 * @return ChangSolPageUtils.Response
 	 */
-	public PageDto.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request) {
+	public ChangSolPageUtils.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request) {
 		// 정렬
 		if (ChangSolUtils.isNotBlank(request.getSortColumnName()) && request.getSortType() != null) {
 
@@ -68,9 +68,9 @@ public class SampleMasterService {
 
 		PageRequest pageRequest = PageRequest.of(request.getPage(), request.getLimit(), Sort.by(Sort.Order.desc("id")));
 		Page<SampleMaster> sampleMasterPage = sampleMasterRepository.findAll(restriction.toSpecification(), pageRequest);
-		return PageDto.toResponse(sampleMasterPage, sampleMasterPage.stream()
-																	.map(SampleMasterMapper.INSTANCE::response)
-																	.toList());
+		return ChangSolPageUtils.toResponse(sampleMasterPage, sampleMasterPage.stream()
+																			  .map(SampleMasterMapper.INSTANCE::response)
+																			  .toList());
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package org.changsol.api.apps.bases.dto;
+package org.changsol.api.utils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
@@ -11,13 +11,13 @@ import org.changsol.api.apps.bases.enums.SortType;
 import org.springframework.data.domain.Page;
 
 /**
- * Page Dto Class
+ * Page Util Class
  */
-public class PageDto {
+public class ChangSolPageUtils {
 
 	@Getter
 	@Setter
-	@Schema(title = "PageDto Request")
+	@Schema(title = "Page Request")
 	public static class Request {
 
 		@NotNull(message = "Please enter page number")
@@ -48,7 +48,7 @@ public class PageDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
-	@Schema(title = "PageDto Response")
+	@Schema(title = "Page Response")
 	public static class Response<T> {
 
 		@Schema(title = "페이지 총 갯수")
@@ -81,7 +81,7 @@ public class PageDto {
 
 
 	/**
-	 * Response Return
+	 * Page Response Return
 	 **/
 	public static <X, Y> Response<X> toResponse(Page<Y> page, List<X> dataList) {
 

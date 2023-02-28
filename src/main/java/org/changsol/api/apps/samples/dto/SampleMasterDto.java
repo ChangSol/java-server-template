@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.changsol.api.apps.bases.dto.PageDto;
+import org.changsol.api.utils.ChangSolPageUtils;
 
 /**
  * SampleMasterDto
@@ -23,7 +23,7 @@ public class SampleMasterDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class RequestPage extends PageDto.Request {
+    public static class RequestPage extends ChangSolPageUtils.Request {
         private String keyword;
     }
 
