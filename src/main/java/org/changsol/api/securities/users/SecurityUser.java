@@ -1,10 +1,10 @@
-package org.changsol.api.security.users;
+package org.changsol.api.securities.users;
 
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import org.changsol.api.apps.users.dto.UserDto;
 import org.changsol.api.apps.users.entity.Users;
-import org.changsol.api.apps.users.mappers.UserMapper;
+import org.changsol.api.apps.users.mapper.UserMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

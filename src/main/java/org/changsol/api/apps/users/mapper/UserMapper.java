@@ -1,4 +1,4 @@
-package org.changsol.api.apps.users.mappers;
+package org.changsol.api.apps.users.mapper;
 
 import org.changsol.api.apps.users.dto.UserDto;
 import org.changsol.api.apps.users.entity.Users;

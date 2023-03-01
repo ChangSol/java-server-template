@@ -10,7 +10,7 @@ import org.changsol.api.apps.samples.mapper.SampleMasterMapper;
 import org.changsol.api.apps.samples.repository.SampleMasterRepository;
 import org.changsol.api.utils.page.ChangSolPageUtils;
 import org.changsol.api.utils.ChangSolUtils;
-import org.changsol.api.utils.jpas.restrictions.ChangSolJpaRestriction;
+import org.changsol.api.utils.jpas.restriction.ChangSolJpaRestriction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

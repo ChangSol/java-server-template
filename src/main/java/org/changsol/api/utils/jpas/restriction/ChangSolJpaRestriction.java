@@ -1,4 +1,4 @@
-package org.changsol.api.utils.jpas.restrictions;
+package org.changsol.api.utils.jpas.restriction;
 
 import com.google.common.collect.Lists;
 import org.hibernate.query.criteria.internal.path.ListAttributeJoin;

@@ -1,18 +1,9 @@
 package org.changsol.api.configs;
 
 import lombok.RequiredArgsConstructor;
-import org.changsol.api.security.support.RestAuthenticationEntryPoint;
-import org.changsol.api.security.support.RestAuthenticationFailureHandler;
-import org.changsol.api.security.support.RestAuthenticationSuccessHandler;
-import org.changsol.api.security.support.RestLogoutSuccessHandler;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

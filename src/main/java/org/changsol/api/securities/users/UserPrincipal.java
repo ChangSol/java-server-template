@@ -1,4 +1,4 @@
-package org.changsol.api.security.users;
+package org.changsol.api.securities.users;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

@@ -1,4 +1,4 @@
-package org.changsol.api.utils.jpas.restrictions;
+package org.changsol.api.utils.jpas.restriction;
 
 /**
  * Predicate WHERE 절 AND, OR TYPE
