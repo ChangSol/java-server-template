@@ -54,7 +54,7 @@ public class SampleMasterService {
 	 */
 	public ChangSolPageUtils.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request) {
 		// 정렬
-		if (ChangSolUtils.isNotBlank(request.getSortColumnName()) && request.getChangSolSortType() != null) {
+		if (ChangSolUtils.isNotBlank(request.getSortColumn()) && request.getSortType() != null) {
 
 		}
 
