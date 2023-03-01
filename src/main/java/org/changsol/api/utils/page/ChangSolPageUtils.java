@@ -28,10 +28,10 @@ public class ChangSolPageUtils {
 		private Integer limit = 20;
 
 		@Schema(title = "정렬 필드")
-		private String sortColumnName;
+		private String sortColumn;
 
 		@Schema(title = "정렬 타입")
-		private ChangSolSortType changSolSortType;
+		private ChangSolSortType sortType;
 
 		/**
 		 * 페이지 숫자 GET
