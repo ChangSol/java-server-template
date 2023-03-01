@@ -1,4 +1,4 @@
-package org.changsol.api.apps.bases.domain;
+package org.changsol.api.utils.bases.domain;
 
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 
 @Getter
 @MappedSuperclass //자식에게 매핑정보만 제공
-public class BaseDomainIdentity extends BaseDomain {
+public class ChangSolBaseDomainIdentity extends ChangSolBaseDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;

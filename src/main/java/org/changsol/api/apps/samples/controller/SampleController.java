@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.service.SampleMasterService;
-import org.changsol.api.utils.ChangSolPageUtils;
+import org.changsol.api.utils.page.ChangSolPageUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package org.changsol.api.utils;
+package org.changsol.api.utils.page;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.changsol.api.apps.bases.enums.SortType;
 import org.springframework.data.domain.Page;
 
 /**
@@ -32,7 +31,7 @@ public class ChangSolPageUtils {
 		private String sortColumnName;
 
 		@Schema(title = "정렬 타입")
-		private SortType sortType;
+		private ChangSolSortType changSolSortType;
 
 		/**
 		 * 페이지 숫자 GET

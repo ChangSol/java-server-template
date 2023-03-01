@@ -1,4 +1,4 @@
-package org.changsol.api.apps.bases.domain;
+package org.changsol.api.utils.bases.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass //자식에게 매핑정보만 제공
 @EntityListeners(AuditingEntityListener.class) //Audit
-public class BaseDomain {
+public class ChangSolBaseDomain {
 
     @CreatedDate
     private LocalDateTime createdAt;

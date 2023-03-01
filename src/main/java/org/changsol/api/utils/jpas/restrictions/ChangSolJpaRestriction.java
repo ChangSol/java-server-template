@@ -1,26 +1,16 @@
-package org.changsol.api.utils.jpas.restriction;
+package org.changsol.api.utils.jpas.restrictions;
 
 import com.google.common.collect.Lists;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Fetch;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.hibernate.query.criteria.internal.path.ListAttributeJoin;
 import org.hibernate.query.criteria.internal.path.SetAttributeJoin;
 import org.hibernate.validator.internal.engine.groups.Group;
 import org.springframework.data.jpa.domain.Specification;
+
+import javax.persistence.criteria.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 
 /**
  * Hibernate Restriction Custom Class
