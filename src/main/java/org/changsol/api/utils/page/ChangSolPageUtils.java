@@ -98,8 +98,8 @@ public class ChangSolPageUtils {
 							  PAGE_NUMBER,
 							  page.getNumber() * page.getSize(),
 							  page.getSize(),
-							  PAGE_NUMBER > 1,
 							  PAGE_NUMBER < pageTotal,
+							  PAGE_NUMBER > 1,
 							  page.getTotalElements(),
 							  dataList.size(),
 							  dataList);
