@@ -68,7 +68,7 @@ public class SampleMasterService {
 
 		PageRequest pageRequest = PageRequest.of(request.getPage(), request.getLimit(), Sort.by(Sort.Order.desc("id")));
 		Page<SampleMaster> sampleMasterPage = sampleMasterRepository.findAll(restriction.toSpecification(), pageRequest);
-		return ChangSolPageUtils.toResponse(sampleMasterPage, sampleMasterPage.stream()
+		return ChangSolPageUtils.valueOf(sampleMasterPage, sampleMasterPage.stream()
 																			  .map(SampleMasterMapper.INSTANCE::response)
 																			  .toList());
 	}

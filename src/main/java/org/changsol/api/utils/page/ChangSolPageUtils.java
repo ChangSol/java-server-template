@@ -82,7 +82,7 @@ public class ChangSolPageUtils {
 	/**
 	 * Page Response Return
 	 **/
-	public static <X, Y> Response<X> toResponse(Page<Y> page, List<X> dataList) {
+	public static <X, Y> Response<X> valueOf(Page<Y> page, List<X> dataList) {
 
 		final int PAGE_NUMBER = page.getNumber() + 1; // 0페이지 -> 1페이지로 변경
 
