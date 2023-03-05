@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
 import org.changsol.api.apps.samples.service.SampleMasterService;
 import org.changsol.api.utils.page.ChangSolPageUtils;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,13 +27,13 @@ public class SampleController {
 
     @Operation(summary = "sample master getList", description = "sample master 데이터 목록 가져오기")
     @GetMapping("/master")
-    public List<SampleMasterDto.Response> getSampleMasterList(SampleMasterDto.Request request){
+    public List<SampleMasterDto.Response> getSampleMasterList(@ParameterObject SampleMasterDto.Request request){
         return sampleMasterService.getSampleMasterList(request);
     }
 
     @Operation(summary = "sample master get page", description = "sample master 데이터 목록 페이징 가져오기")
     @GetMapping("/master/page")
-    public ChangSolPageUtils.Response<SampleMasterDto.Response> getSampleMasterPage(SampleMasterDto.RequestPage request){
+    public ChangSolPageUtils.Response<SampleMasterDto.Response> getSampleMasterPage(@ParameterObject SampleMasterDto.RequestPage request){
         return sampleMasterService.getSampleMasterPage(request);
     }
 
