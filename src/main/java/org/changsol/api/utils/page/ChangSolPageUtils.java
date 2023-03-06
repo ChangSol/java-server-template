@@ -20,17 +20,17 @@ public class ChangSolPageUtils {
 	public static class Request {
 
 		@NotNull(message = "Please enter page number")
-		@Schema(title = "페이지 번호", example = "1")
-		private Integer page = 1;
+		@Schema(description = "페이지 번호", example = "1")
+		private Integer page;
 
 		@NotNull(message = "Please enter page limit number")
-		@Schema(title = "한 페이지 당 갯수", example = "10", requiredMode = Schema.RequiredMode.REQUIRED)
-		private Integer limit = 20;
+		@Schema(description = "한 페이지 당 갯수", example = "10", requiredMode = Schema.RequiredMode.REQUIRED)
+		private Integer limit;
 
-		@Schema(title = "정렬 필드")
+		@Schema(description = "정렬 필드")
 		private String sortColumn;
 
-		@Schema(title = "정렬 타입")
+		@Schema(description = "정렬 타입")
 		private ChangSolSortType sortType;
 
 		/**
@@ -50,31 +50,31 @@ public class ChangSolPageUtils {
 	@Schema(title = "Page Response")
 	public static class Response<T> {
 
-		@Schema(title = "페이지 총 갯수")
+		@Schema(description = "페이지 총 갯수")
 		private long pageTotal;
 
-		@Schema(title = "현재 페이지 번호")
+		@Schema(description = "현재 페이지 번호")
 		private int page;
 
-		@Schema(title = "시작 시점 숫자")
+		@Schema(description = "시작 시점 숫자")
 		private int offset;
 
-		@Schema(title = "한 페이지 당 갯수")
+		@Schema(description = "한 페이지 당 갯수")
 		private int limit;
 
-		@Schema(title = "다음 페이지 여부")
+		@Schema(description = "다음 페이지 여부")
 		private Boolean isNext;
 
-		@Schema(title = "이전 페이지 여부")
+		@Schema(description = "이전 페이지 여부")
 		private Boolean isPrev;
 
-		@Schema(title = "데이터 총 갯수")
+		@Schema(description = "데이터 총 갯수")
 		private long dataTotalCount;
 
-		@Schema(title = "페이지 데이터 총 갯수")
+		@Schema(description = "페이지 데이터 총 갯수")
 		private long dataCount;
 
-		@Schema(title = "데이터 목록")
+		@Schema(description = "데이터 목록")
 		private List<T> dataList;
 	}
 

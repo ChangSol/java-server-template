@@ -11,43 +11,48 @@ import org.changsol.api.utils.page.ChangSolPageUtils;
  */
 public class SampleMasterDto {
 
-    @Schema(description = "SampleMaster Request")
-    @Getter
-    @Setter
-    // @NoArgsConstructor
-    public static class Request {
-        private String keyword;
-    }
+	@Schema(title = "SampleMaster Request")
+	@Getter
+	@Setter
+	// @NoArgsConstructor
+	public static class Request {
 
-    @Schema(description = "SampleMaster Request Page")
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class RequestPage extends ChangSolPageUtils.Request {
-        private String keyword;
-    }
+		@Schema(description = "search keyword")
+		private String keyword;
+	}
 
-    @Schema(description = "SampleMaster Response")
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class Response {
-        @Schema(description = "고유ID")
-        private Long id;
-        @Schema(description = "마스터 이름")
-        private String masterName;
-    }
+	@Schema(title = "SampleMaster Request Page")
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class RequestPage extends ChangSolPageUtils.Request {
 
-    @Schema(description = "SampleMaster CreateOrUpdate")
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class CreateOrUpdate {
-        @Schema(description = "마스터 이름", example = "창솔루션")
-        private String masterName;
+		private String keyword;
+	}
 
-        @Schema(description = "디테일 이름", example = "창솔루션 자식")
-        private String detailName;
-    }
+	@Schema(title = "SampleMaster Response")
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class Response {
+
+		@Schema(description = "고유ID")
+		private Long id;
+		@Schema(description = "마스터 이름")
+		private String masterName;
+	}
+
+	@Schema(title = "SampleMaster CreateOrUpdate")
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class CreateOrUpdate {
+
+		@Schema(description = "마스터 이름", example = "창솔루션")
+		private String masterName;
+
+		@Schema(description = "디테일 이름", example = "창솔루션 자식")
+		private String detailName;
+	}
 
 }
