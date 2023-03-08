@@ -4,9 +4,8 @@
 
 ### 버전
 Java 16<br>
-Spring Boot 2.5.3<br>
-Gradle-7.1<br>
-QueryDSL 4.4.0
+Spring Boot 2.6.6<br>
+Gradle-7.2<br>
 
 ### 기본환경
 - 사용포트 : 8080<br>
