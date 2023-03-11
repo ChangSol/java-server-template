@@ -47,7 +47,7 @@ Gradle-7.2<br>
 
 ### Custom Jpa Specification (동적쿼리예시)
 - 조건
-```java
+```javaㄱㄷ
 /**
 * SampleMaster Data Get
 * @param request 검색조건

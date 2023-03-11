@@ -43,6 +43,11 @@ public class ChangSolJpaRestriction {
 	 */
 	private final List<ChangSolJpaJoin> joinList = Lists.newArrayList();
 
+	/**
+	 * Query Distinct
+	 */
+	private boolean isDistinctQuery = false;
+
 	public ChangSolJpaRestriction() {
 		type = ChangSolJpaRestrictionType.AND;
 	}
@@ -430,7 +435,7 @@ public class ChangSolJpaRestriction {
 								}
 								if (addFetch != null) {
 									if (isCollectionType(addFetch.getClass())) {
-										query.distinct(true); // 카테시안 곱 방지
+										isDistinctQuery = true;
 									}
 
 									fetches = addFetch.getFetches();
@@ -443,7 +448,7 @@ public class ChangSolJpaRestriction {
 							Fetch<?, ?> addFetch = root.fetch(fetch.columnName(), fetch.joinType());
 
 							if (isCollectionType(addFetch.getClass())) {
-								query.distinct(true); // 카테시안 곱 방지
+								isDistinctQuery = true;
 							}
 						}
 					}
@@ -469,8 +474,8 @@ public class ChangSolJpaRestriction {
 								}
 
 								if (joinObj != null) {
-									if (isCollectionType(joinObj.getJavaType())) {
-										query.distinct(true); // 카테시안 곱 방지
+									if (isCollectionType(joinObj.getClass())) {
+										isDistinctQuery = true;
 									}
 
 									joins = joinObj.getJoins();
@@ -483,14 +488,17 @@ public class ChangSolJpaRestriction {
 
 							Join<T, ?> joinObj = root.join(join.columnName(), join.joinType());
 
-							if (isCollectionType(joinObj.getJavaType())) {
-								query.distinct(true); // 카테시안 곱 방지
+							if (isCollectionType(joinObj.getClass())) {
+								isDistinctQuery = true;
 							}
 						}
 					}
 				}
 			}
 			// endregion
+
+			// query distinct 처리여부
+			query.distinct(isDistinctQuery);
 
 			List<Predicate> predicateList = Lists.newArrayList();
 			for (ChangSolJpaCondition condition : conditionList) {
@@ -645,16 +653,33 @@ public class ChangSolJpaRestriction {
 		return predicateList;
 	}
 
-	private static <Y> Path<Y> getPath(Root<?> root, String key) {
-		Path<Y> x = null;
+	private <Y> Path<Y> getPath(Root<?> root, String key) {
+		Path<Y> path = null;
+		Join<?, ?> joinOption = null;
 		if (key.contains(".")) {
-			for (String k : key.split("\\.")) {
-				x = (x == null ? root.get(k) : x.get(k));
+			String[] keySplit = key.split("\\.");
+			int count = 1;
+			for (String k : keySplit) {
+				if (path == null) {
+					joinOption = root.join(k, JoinType.LEFT);
+					path = root.get(k);
+				} else {
+					if (count != keySplit.length) {
+						joinOption = joinOption.join(k, JoinType.LEFT);
+					}
+					if (isCollectionType(path.getJavaType())) {
+						isDistinctQuery = true;
+						path = joinOption.get(k);
+					} else {
+						path = path.get(k);
+					}
+				}
+				count++;
 			}
 		} else {
-			x = root.get(key);
+			path = root.get(key);
 		}
-		return x;
+		return path;
 	}
 
 	private boolean isCollectionType(Class<?> clazz) {
