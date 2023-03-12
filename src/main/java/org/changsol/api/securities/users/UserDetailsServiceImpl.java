@@ -1,7 +1,7 @@
 package org.changsol.api.securities.users;
 
 import lombok.RequiredArgsConstructor;
-import org.changsol.api.apps.users.entity.Users;
+import org.changsol.api.apps.users.domain.Users;
 import org.changsol.api.apps.users.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

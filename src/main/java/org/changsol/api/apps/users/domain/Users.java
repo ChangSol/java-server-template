@@ -1,4 +1,4 @@
-package org.changsol.api.apps.users.entity;
+package org.changsol.api.apps.users.domain;
 
 import lombok.Getter;
 import lombok.Setter;

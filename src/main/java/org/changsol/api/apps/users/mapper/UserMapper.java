@@ -1,7 +1,7 @@
 package org.changsol.api.apps.users.mapper;
 
 import org.changsol.api.apps.users.dto.UserDto;
-import org.changsol.api.apps.users.entity.Users;
+import org.changsol.api.apps.users.domain.Users;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

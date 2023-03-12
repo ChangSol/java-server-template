@@ -4,8 +4,8 @@ import java.util.List;
 import javax.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
-import org.changsol.api.apps.samples.entity.SampleDetail;
-import org.changsol.api.apps.samples.entity.SampleMaster;
+import org.changsol.api.apps.samples.domain.SampleDetail;
+import org.changsol.api.apps.samples.domain.SampleMaster;
 import org.changsol.api.apps.samples.mapper.SampleMasterMapper;
 import org.changsol.api.apps.samples.repository.SampleMasterRepository;
 import org.changsol.api.utils.page.ChangSolPageUtils;
@@ -35,10 +35,17 @@ public class SampleMasterService {
 		// 조건
 		ChangSolJpaRestriction restriction = new ChangSolJpaRestriction();
 		if (ChangSolUtils.isNotBlank(request.getKeyword())) {
-			restriction.like("masterName", "테스트");
+			final String KEYWORD = "%" + request.getKeyword() + "%";
+			// restriction.like("masterName", KEYWORD);
+
+			// 디테일
+			restriction.like("sampleDetails.detailName", KEYWORD);
+
+			// 디테일 -> 유저
+			restriction.like("sampleDetails.user.name", KEYWORD);
 		}
 		// restriction.addFetch("sampleDetails", JoinType.LEFT);
-		restriction.addJoin("sampleDetails", JoinType.LEFT);
+		// restriction.addJoin("sampleDetails", JoinType.LEFT);
 
 		return sampleMasterRepository.findAll(restriction.toSpecification())
 									 .stream()
@@ -69,8 +76,8 @@ public class SampleMasterService {
 		PageRequest pageRequest = PageRequest.of(request.getPage(), request.getLimit(), Sort.by(Sort.Order.desc("id")));
 		Page<SampleMaster> sampleMasterPage = sampleMasterRepository.findAll(restriction.toSpecification(), pageRequest);
 		return ChangSolPageUtils.valueOf(sampleMasterPage, sampleMasterPage.stream()
-																			  .map(SampleMasterMapper.INSTANCE::response)
-																			  .toList());
+																		   .map(SampleMasterMapper.INSTANCE::response)
+																		   .toList());
 	}
 
 	/**

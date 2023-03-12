@@ -1,4 +1,4 @@
-package org.changsol.api.apps.samples.entity;
+package org.changsol.api.apps.samples.domain;
 
 import com.google.common.collect.Sets;
 import lombok.Getter;

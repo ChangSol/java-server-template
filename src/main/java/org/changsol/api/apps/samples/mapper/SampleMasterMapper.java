@@ -1,7 +1,7 @@
 package org.changsol.api.apps.samples.mapper;
 
 import org.changsol.api.apps.samples.dto.SampleMasterDto;
-import org.changsol.api.apps.samples.entity.SampleMaster;
+import org.changsol.api.apps.samples.domain.SampleMaster;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
