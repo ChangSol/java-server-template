@@ -36,7 +36,10 @@ public class SampleMasterService {
 		ChangSolJpaRestriction restriction = new ChangSolJpaRestriction();
 		if (ChangSolUtils.isNotBlank(request.getKeyword())) {
 			final String KEYWORD = "%" + request.getKeyword() + "%";
-			// restriction.like("masterName", KEYWORD);
+			restriction.like("masterName", KEYWORD);
+
+			// 디테일
+			restriction.like("sampleDetails.detailName", KEYWORD);
 
 			// 디테일
 			restriction.like("sampleDetails.detailName", KEYWORD);
@@ -44,7 +47,7 @@ public class SampleMasterService {
 			// 디테일 -> 유저
 			restriction.like("sampleDetails.user.name", KEYWORD);
 		}
-		// restriction.addFetch("sampleDetails", JoinType.LEFT);
+		restriction.addFetch("sampleDetails", JoinType.LEFT);
 		// restriction.addJoin("sampleDetails", JoinType.LEFT);
 
 		return sampleMasterRepository.findAll(restriction.toSpecification())
