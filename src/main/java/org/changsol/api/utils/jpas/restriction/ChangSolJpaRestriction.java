@@ -39,11 +39,6 @@ public class ChangSolJpaRestriction {
 	private final List<ChangSolJpaJoin> fetchList = Lists.newArrayList();
 
 	/**
-	 * Join List
-	 */
-	private final List<ChangSolJpaJoin> joinList = Lists.newArrayList();
-
-	/**
 	 * Query Distinct
 	 */
 	private boolean isDistinctQuery = false;
@@ -87,13 +82,6 @@ public class ChangSolJpaRestriction {
 	public void fetchClear() {
 		fetchList.clear();
 	}
-
-	/**
-	 * Join List Clear
-	 */
-	public void joinClear() {
-		joinList.clear();
-	}
 	// endregion
 
 	// region Add Method
@@ -111,13 +99,6 @@ public class ChangSolJpaRestriction {
 	public void addFetch(String columnName, JoinType joinType) {
 		this.fetchList.add(new ChangSolJpaJoin(columnName, joinType));
 	}
-
-	/**
-	 * Join Add
-	 */
-	public void addJoin(String columnName, JoinType joinType) {
-		this.joinList.add(new ChangSolJpaJoin(columnName, joinType));
-	}
 	// endregion
 
 	// region Remove Method
@@ -131,17 +112,6 @@ public class ChangSolJpaRestriction {
 															.toList();
 		this.fetchList.clear();
 		this.fetchList.addAll(fetchJoinList);
-	}
-
-	/**
-	 * Join Remove
-	 */
-	public void removeJoin(String columnName) {
-		List<ChangSolJpaJoin> fetchJoinList = this.joinList.stream()
-														   .filter(join -> !join.columnName().equals(columnName))
-														   .toList();
-		this.joinList.clear();
-		this.joinList.addAll(fetchJoinList);
 	}
 	// endregion
 
@@ -448,47 +418,6 @@ public class ChangSolJpaRestriction {
 							Fetch<?, ?> addFetch = root.fetch(fetch.columnName(), fetch.joinType());
 
 							if (isCollectionType(addFetch.getClass())) {
-								isDistinctQuery = true;
-							}
-						}
-					}
-				}
-			}
-			// endregion
-
-			// region join
-			if (!joinList.isEmpty()) {
-				if (root.getJavaType().equals(query.getResultType())) { // data query 와 count query 를 구분
-					for (ChangSolJpaJoin join : joinList) {
-						if (join.columnName().contains(".")) {
-							Set<? extends Join<?, ?>> joins = root.getJoins();
-							Join<?, ?> joinObj = null;
-							for (String field : join.columnName().split("\\.")) {
-								if (joins.stream().anyMatch(x -> x.getAttribute().getName().equals(field))) {
-									joinObj = joins.stream()
-												   .filter(x -> x.getAttribute().getName().equals(field))
-												   .findAny()
-												   .orElse(null);
-								} else {
-									joinObj = Objects.requireNonNullElse(joinObj, root).join(field, join.joinType());
-								}
-
-								if (joinObj != null) {
-									if (isCollectionType(joinObj.getClass())) {
-										isDistinctQuery = true;
-									}
-
-									joins = joinObj.getJoins();
-								}
-							}
-						} else {
-							if (root.getFetches().stream().anyMatch(x -> x.getAttribute().getName().equals(join.columnName()))) {
-								continue;
-							}
-
-							Join<T, ?> joinObj = root.join(join.columnName(), join.joinType());
-
-							if (isCollectionType(joinObj.getClass())) {
 								isDistinctQuery = true;
 							}
 						}
