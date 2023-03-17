@@ -46,6 +46,9 @@ public class SampleMasterService {
 
 			// 디테일 -> 유저
 			restriction.like("sampleDetails.user.name", KEYWORD);
+
+			// 디테일 -> 디테일서브 -> 유저
+			restriction.like("sampleDetails.sampleDetailSubs.user.name", KEYWORD);
 		}
 		restriction.addFetch("sampleDetails", JoinType.LEFT);
 		// restriction.addJoin("sampleDetails", JoinType.LEFT);
@@ -73,8 +76,8 @@ public class SampleMasterService {
 		if (ChangSolUtils.isNotBlank(request.getKeyword())) {
 			restriction.like("masterName", "테스트");
 		}
-		// restriction.addFetch("sampleDetails", JoinType.LEFT);
-		restriction.addJoin("sampleDetails", JoinType.LEFT);
+		restriction.addFetch("sampleDetails", JoinType.LEFT);
+		// restriction.addJoin("sampleDetails", JoinType.LEFT);
 
 		PageRequest pageRequest = PageRequest.of(request.getPage(), request.getLimit(), Sort.by(Sort.Order.desc("id")));
 		Page<SampleMaster> sampleMasterPage = sampleMasterRepository.findAll(restriction.toSpecification(), pageRequest);

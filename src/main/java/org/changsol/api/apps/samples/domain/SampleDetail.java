@@ -1,5 +1,9 @@
 package org.changsol.api.apps.samples.domain;
 
+import com.google.common.collect.Sets;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,4 +38,10 @@ public class SampleDetail extends ChangSolBaseDomainIdentity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @Comment("유저 정보")
     private Users user;
+
+    /**
+     * 디테일 서브 목록
+     */
+    @OneToMany(mappedBy = "sampleDetail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SampleDetailSub> sampleDetailSubs = Sets.newHashSet();
 }

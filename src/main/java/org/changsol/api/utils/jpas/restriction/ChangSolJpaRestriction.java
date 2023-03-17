@@ -582,35 +582,40 @@ public class ChangSolJpaRestriction {
 		return predicateList;
 	}
 
-	private <T> Path<T> getPath(Root<?> root, String columnName) {
+	private <T> Path<T> getPath(Root<?> root, final String FULL_COLUMN_NAME) {
 		Path<T> path = null;
-		final String[] COLUMN_NAMES = columnName.split("\\.");
+		final String[] COLUMN_NAMES = FULL_COLUMN_NAME.split("\\.");
 		if (COLUMN_NAMES.length > 1) {
 			Set<? extends Fetch<?, ?>> fetches = root.getFetches();
 			Set<? extends Join<?, ?>> joins = root.getJoins();
 			Join<?, ?> join = null;
 			int count = 1;
-			for (String key : COLUMN_NAMES) {
+			for (final String COLUMN_NAME : COLUMN_NAMES) {
 				if (count != COLUMN_NAMES.length) {
-					Fetch<?, ?> fetchCheck = fetches.stream()
-													.filter(x -> x.getAttribute().getName().equals(key))
-													.findAny()
-													.orElse(null);
-					if (fetchCheck != null) {
-						join = (Join<?, ?>) fetchCheck;
+					Fetch<?, ?> fetch = fetches.stream()
+											   .filter(x -> x.getAttribute().getName().equals(COLUMN_NAME))
+											   .findAny()
+											   .orElse(null);
+					if (fetch != null) {
+						fetches = fetch.getFetches();
+						join = (Join<?, ?>) fetch;
 					} else {
-						Join<?, ?> joinCheck = joins.stream()
-													.filter(x -> x.getAttribute().getName().equals(key))
-													.findAny()
-													.orElse(null);
-						if (joinCheck != null) {
-							join = joinCheck;
+						if (join != null) {
+							join = join.join(COLUMN_NAME, JoinType.LEFT);
 						} else {
-							join = join == null ? root.join(key, JoinType.LEFT) : join.join(key, JoinType.LEFT);
+							join = joins.stream()
+										.filter(x -> x.getAttribute().getName().equals(COLUMN_NAME))
+										.findAny()
+										.orElse(null);
+							if (join != null) {
+								joins = join.getJoins();
+							} else {
+								join = root.join(COLUMN_NAME, JoinType.LEFT);
+							}
 						}
 					}
 				} else {
-					path = join.get(key);
+					path = join.get(COLUMN_NAME);
 				}
 
 				if (isCollectionType(join.getClass())) {
@@ -620,7 +625,7 @@ public class ChangSolJpaRestriction {
 				count++;
 			}
 		} else {
-			path = root.get(columnName);
+			path = root.get(COLUMN_NAMES[0]);
 		}
 		return path;
 	}
