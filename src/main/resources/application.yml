@@ -32,6 +32,7 @@ storage:
 
 #SrpingDoc 설정 API 문서화
 springdoc:
+  use-fqn: true #Scheme 중복 이슈 처리
   version: 1.0.0
   api-docs:
     path: /api-docs
