@@ -380,6 +380,30 @@ public class ChangSolJpaRestriction {
 											  .columnName2(columnName2)
 											  .build());
 	}
+
+	/**
+	 * IS EMPTY
+	 *
+	 * @param columnName1 컬럼명1
+	 */
+	public void isEmpty(String columnName1) {
+		conditionList.add(ChangSolJpaCondition.builder()
+				.conditionType(ChangSolJpaConditionType.IS_EMPTY)
+				.columnName1(columnName1)
+				.build());
+	}
+
+	/**
+	 * IS NOT EMPTY
+	 *
+	 * @param columnName1 컬럼명1
+	 */
+	public void isNotEmpty(String columnName1) {
+		conditionList.add(ChangSolJpaCondition.builder()
+				.conditionType(ChangSolJpaConditionType.IS_NOT_EMPTY)
+				.columnName1(columnName1)
+				.build());
+	}
 	// endregion
 
 	// region Specification Method
@@ -496,6 +520,8 @@ public class ChangSolJpaRestriction {
 			case BETWEEN -> predicateList.addAll(getPredicateItemBetween(criteriaBuilder, root, columnName1, value1, value2));
 			case COLUMN_EQUALS -> predicateList.add(criteriaBuilder.equal(getPath(root, columnName1), getPath(root, columnName2)));
 			case COLUMN_NOT_EQUALS -> predicateList.add(criteriaBuilder.notEqual(getPath(root, columnName1), getPath(root, columnName2)));
+			case IS_EMPTY -> predicateList.add(criteriaBuilder.isEmpty(getPath(root, columnName1)));
+			case IS_NOT_EMPTY -> predicateList.add(criteriaBuilder.isNotEmpty(getPath(root, columnName1)));
 		}
 
 		return predicateList;

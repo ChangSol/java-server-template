@@ -19,7 +19,9 @@ enum ChangSolJpaConditionType {
 	NOT_ILIKE("UPPER NOT LIKE"),
 	BETWEEN("BETWEEN"),
 	COLUMN_EQUALS("같은 컬럼 값 (key1 = key2)"),
-	COLUMN_NOT_EQUALS("같지 않은 컬럼 값 (key1 != key2)");
+	COLUMN_NOT_EQUALS("같지 않은 컬럼 값 (key1 != key2)"),
+	IS_EMPTY("비어있음"),
+	IS_NOT_EMPTY("비어있지 않음");
 
 	public final String title;
 
